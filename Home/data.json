@@ -1,0 +1,259 @@
+{
+    "navigation": [
+        {
+            "label": "About",
+            "link": "#about"
+        },
+        {
+            "label": "Skills",
+            "link": "#skills"
+        },
+        {
+            "label": "Contact",
+            "link": "#contact"
+        }
+    ],
+    "cta": {
+        "text": "Hire Me",
+        "link": "#contact"
+    },
+    "hero": {
+        "headline": [
+            "BUILDING",
+            "DIGITAL",
+            "THINGS."
+        ],
+        "description": "Web developer crafting fast, accessible, and beautifully functional experiences. One year deep — and just getting started.",
+        "stats": [
+            {
+                "num": "1+",
+                "label": "Yr Experience"
+            },
+            {
+                "num": "5+",
+                "label": "Projects Done"
+            },
+            {
+                "num": "20+",
+                "label": "Site Enhancements"
+            }
+        ],
+        "techStack": [
+            "C#",
+            "SQL",
+            "ASP.NET",
+            "SQL Server",
+            "Dapper"
+        ],
+        "backgroundText": "DEV",
+        "scrollText": "Scroll"
+    },
+    "marquee": [
+        {
+            "category": "Languages",
+            "skills": [
+                "C#",
+                "SQL",
+                "HTML",
+                "CSS",
+                "JS"
+            ]
+        },
+        {
+            "category": "Databases",
+            "skills": [
+                "SQL Server",
+                "T-SQL",
+                "Stored Procedures",
+                "Query optimization"
+            ]
+        }
+    ],
+    "about": {
+        "label": "01 — About",
+        "title": "THE STORY<br>SO FAR.",
+        "avatar": "AC",
+        "accent": {
+            "num": "2021",
+            "lbl": "Started Coding"
+        },
+        "bio": [
+            "Hey, I'm <strong>Rohit Magdum</strong> — a web developer based in <em>India</em>.",
+            "My journey started with HTML and CSS, evolving into <strong>ASP.NET, C#, and SQL</strong>."
+        ],
+        "timeline": [
+            {
+                "year": "May 2025 - Present",
+                "title": "Software Developer @ Larsen & Toubro (via TeamLease Services)",
+                "description": "Design, develop, and enhance internal enterprise applications."
+            },
+            {
+                "year": "Jan 2025 - Apr 2025",
+                "title": "Software Developer Intern @ Larsen & Toubro",
+                "description": "Developed internal web applications"
+            },
+            {
+                "year": "2021 - 2025",
+                "title": "Bachelor of Engineering",
+                "description": "Electronics & Computer Engineering <br/> • CGPA: 8.17 / 10.0 <br/> • Percentage: 69.19% <br/> • GATE (CSE): 15.37 <br/> • GATE (DA): 14"
+
+            }
+            
+        ]
+    },
+    "skillsSection": {
+        "label": "02 — Skills",
+        "title": "WHAT I<br>WORK WITH.",
+        "categories": [
+            {
+                "icon": "⚡",
+                "title": "Frontend",
+                "description": "Modern interactive UIs",
+                "tags": [
+                    "JavaScript",
+                    "HTML5",
+                    "CSS3",
+                    "React",
+                    "DOM APIs"
+                ]
+            },
+            {
+                "icon": "🔧",
+                "title": "Backend",
+                "description": "Scalable server solutions",
+                "tags": [
+                    "C#",
+                    "ASP.NET Core",
+                    ".NET 8",
+                    "REST APIs",
+                    "Dapper ORM"
+                ]
+            },
+            {
+                "icon": "💾",
+                "title": "Databases",
+                "description": "Data management & optimization",
+                "tags": [
+                    "SQL Server",
+                    "T-SQL",
+                    "Stored Procedures",
+                    "Query Optimization",
+                    "ACID Compliance"
+                ]
+            },
+            {
+                "icon": "🛠️",
+                "title": "Tools & DevOps",
+                "description": "Developer workflow & deployment",
+                "tags": [
+                    "Git",
+                    "Visual Studio",
+                    "IIS",
+                    "Windows Server",
+                    "Debugging Tools"
+                ]
+            }
+        ]
+    },
+    "projectsHeader": {
+        "label": "03 — Projects",
+        "title": "SELECTED<br>WORK.",
+        "githubLink": "#",
+        "githubLabel": "All Projects →"
+    },
+    "projects": [
+        {
+            "id": "01",
+            "featured": true,
+            "emoji": "🛒",
+            "thumbClass": "p1",
+            "title": "ShopFlow",
+            "description": "Full-stack e-commerce platform with payment processing",
+            "tech": [
+                "ASP.NET Core",
+                "SQL Server",
+                "Stripe",
+                "JavaScript"
+            ],
+            "github": "#",
+            "live": "#"
+        },
+        {
+            "id": "02",
+            "featured": false,
+            "emoji": "📊",
+            "thumbClass": "p2",
+            "title": "Analytics Dashboard",
+            "description": "Real-time data visualization and reporting system",
+            "tech": [
+                "C#",
+                "REST API",
+                "SQL Server",
+                "Chart.js"
+            ],
+            "github": "#",
+            "live": "#"
+        },
+        {
+            "id": "03",
+            "featured": false,
+            "emoji": "🔐",
+            "thumbClass": "p3",
+            "title": "User Management System",
+            "description": "Enterprise authentication & authorization solution",
+            "tech": [
+                "ASP.NET Identity",
+                "Dapper",
+                "SQL Server",
+                "JWT"
+            ],
+            "github": "#",
+            "live": "#"
+        },
+        {
+            "id": "04",
+            "featured": false,
+            "emoji": "📱",
+            "thumbClass": "p4",
+            "title": "Inventory Tracker",
+            "description": "Stock management application with real-time updates",
+            "tech": [
+                ".NET 8",
+                "Entity Framework",
+                "SQL Server",
+                "HTML/CSS"
+            ],
+            "github": "#",
+            "live": "#"
+        }
+    ],
+    "contact": {
+        "label": "04 — Contact",
+        "title": "LET'S<br>WORK.",
+        "subtext": "Open to collaborations and exciting opportunities.",
+        "email": "rohit.p.magdum@gmail.com",
+        "socials": [
+            {
+                "platform": "GitHub",
+                "icon": "fab fa-github",
+                "link": "https://github.com/rohitpmagdum"
+            },
+            {
+                "platform": "LinkedIn",
+                "icon": "fab fa-linkedin",
+                "link": "https://www.linkedin.com/in/rohit-p-magdum/"
+            },
+            {
+                "platform": "Email",
+                "icon": "fas fa-envelope",
+                "link": "mailto:rohit.p.magdum@gmail.com"
+            }
+        ]
+    },
+    "footer": {
+        "year": "2025",
+        "name": "Rohit Magdum",
+        "techStack": "HTML, CSS & JS",
+        "backToTopLabel": "Back to top ↑"
+    }
+}
