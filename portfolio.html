@@ -4,7 +4,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Rohit Magdum — Web developer crafting fast, accessible, and beautifully functional experiences. ASP.NET, C#, SQL Server, JavaScript." />
   <title>Rohit Magdum Portfolio</title>
+  <!-- Preload critical fonts for faster LCP -->
+  <link rel="preload" href="Content/fonts/DMSans-Regular.ttf" as="font" type="font/truetype" crossorigin="anonymous" />
+  <link rel="preload" href="Content/fonts/BebasNeue-Regular.ttf" as="font" type="font/truetype" crossorigin="anonymous" />
+  <link rel="preload" href="Content/fonts/DMMono-Regular.ttf" as="font" type="font/truetype" crossorigin="anonymous" />
   <link href="Content/fonts/css2.css" rel="stylesheet">
   <link rel="stylesheet"
     href="Content/fontawesome-free-7.2.0-web/fontawesome-free-7.2.0-web/css/all.min.css">
@@ -24,7 +29,7 @@
       --bg3: #1a1a17;
       --fg: #e8e6df;
       --fg2: #a09e97;
-      --fg3: #5a5850;
+      --fg3: #7a7870;
       --accent: #d4ff4e;
       --accent2: #ff6b35;
       --accent3: #4ecdc4;
@@ -42,8 +47,8 @@
       --bg2: #eceae2;
       --bg3: #e0ddd3;
       --fg: #1a1916;
-      --fg2: #5a5750;
-      --fg3: #9a9890;
+      --fg2: #4a4740;
+      --fg3: #6a6860;
       --accent: #5a8c00;
       --accent2: #d44000;
       --accent3: #007a74;
@@ -137,6 +142,23 @@
     }
 
     /* NAV */
+    /* Skip-to-content link for accessibility */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 1rem;
+      background: var(--accent);
+      color: var(--bg);
+      padding: 0.5rem 1rem;
+      z-index: 200;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      text-decoration: none;
+    }
+    .skip-link:focus {
+      top: 0.5rem;
+    }
+
     nav {
       position: fixed;
       top: 0;
@@ -603,7 +625,7 @@
       padding-top: 0.1rem;
     }
 
-    .timeline-info h4 {
+    .timeline-info h3 {
       font-size: 0.95rem;
       font-weight: 500;
       margin-bottom: 0.25rem;
@@ -684,159 +706,6 @@
       border: 1px solid var(--border);
       color: var(--fg3);
       letter-spacing: 0.05em;
-    }
-
-    /* PROJECTS */
-    .projects {
-      background: var(--bg2);
-    }
-
-    .projects-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 4rem;
-    }
-
-    .projects-grid {
-      display: grid;
-      gap: 1.5rem;
-    }
-
-    .project-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-
-    .project-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      overflow: hidden;
-      position: relative;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-
-    .project-card:hover {
-      border-color: rgba(212, 255, 78, 0.25);
-      transform: translateY(-4px);
-    }
-
-    .project-card.featured {
-      grid-column: span 2;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .project-thumb {
-      aspect-ratio: 16/9;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .project-card.featured .project-thumb {
-      aspect-ratio: auto;
-      min-height: 280px;
-    }
-
-    .project-thumb-inner {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-display);
-      font-size: 6rem;
-      position: relative;
-      transition: transform 0.5s;
-    }
-
-    .project-card:hover .project-thumb-inner {
-      transform: scale(1.05);
-    }
-
-    .p1 {
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    }
-
-    .p2 {
-      background: linear-gradient(135deg, #1a0533, #2d1b69, #1a0533);
-      color: #9d4edd;
-    }
-
-    .p3 {
-      background: linear-gradient(135deg, #0a2e0a, #1a4a1a, #0a2e0a);
-      color: #4ade80;
-    }
-
-    .p4 {
-      background: linear-gradient(135deg, #2e1a00, #4a2e00, #2e1a00);
-      color: #fb923c;
-    }
-
-    .project-info {
-      padding: 1.75rem;
-    }
-
-    .project-num {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--fg3);
-      letter-spacing: 0.1em;
-      margin-bottom: 0.75rem;
-    }
-
-    .project-info h3 {
-      font-family: var(--font-display);
-      font-size: 1.7rem;
-      letter-spacing: 0.02em;
-      margin-bottom: 0.6rem;
-      line-height: 1.1;
-    }
-
-    .project-info p {
-      font-size: 0.88rem;
-      color: var(--fg2);
-      line-height: 1.65;
-      margin-bottom: 1.25rem;
-    }
-
-    .project-tech {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .tech-tag {
-      font-family: var(--font-mono);
-      font-size: 0.63rem;
-      padding: 0.2rem 0.55rem;
-      background: rgba(212, 255, 78, 0.07);
-      color: var(--accent);
-      letter-spacing: 0.05em;
-      border: 1px solid rgba(212, 255, 78, 0.15);
-    }
-
-    .project-links {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .proj-link {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--fg2);
-      text-decoration: none;
-      letter-spacing: 0.06em;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      transition: color 0.2s;
-    }
-
-    .proj-link:hover {
-      color: var(--accent);
     }
 
     /* CONTACT */
@@ -1080,21 +949,10 @@
       background: linear-gradient(135deg, #d0e8d0 0%, #c8dde0 50%, #e0d0d0 100%);
     }
 
-    /* Light mode project thumb overlays stay dark (they're colorful gradients) */
-    html.light .project-thumb-inner {
-      filter: brightness(0.92);
-    }
-
     /* Light mode stack badge accent */
     html.light .stack-badge.accent {
       background: rgba(90, 140, 0, 0.12);
       color: var(--accent);
-    }
-
-    html.light .tech-tag {
-      background: rgba(90, 140, 0, 0.08);
-      color: var(--accent);
-      border-color: rgba(90, 140, 0, 0.2);
     }
 
     /* Light mode nav CTA */
@@ -1148,15 +1006,6 @@
         grid-template-columns: 1fr;
       }
 
-      .project-card.featured {
-        grid-column: 1;
-        display: block;
-      }
-
-      .project-row {
-        grid-template-columns: 1fr;
-      }
-
       section {
         padding: 5rem 1.5rem;
       }
@@ -1171,6 +1020,9 @@
 </head>
 
 <body>
+
+  <!-- Skip link for keyboard users -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- Custom Cursor -->
   <div class="cursor" id="cursor"></div>
@@ -1191,6 +1043,7 @@
   </nav>
 
   <!-- HERO -->
+  <main id="main-content">
   <section class="hero">
     <div class="hero-left">
       <!-- <div class="hero-tag">Available for freelance</div> -->
@@ -1312,6 +1165,7 @@
     </div>
   </section>
 
+  </main>
   <!-- FOOTER -->
   <footer>
     <!-- Added id="footer-copy-text" -->
@@ -1319,7 +1173,7 @@
     <!-- Added id="footer-back-link" -->
     <a href="#" class="footer-back" id="footer-back-link"></a>
   </footer>
-  <script src="../Content/portfolio.js"></script>
+  <script src="Content/portfolio.js"></script>
   <script>
     // ── THEME TOGGLE ──
     const html = document.documentElement;
