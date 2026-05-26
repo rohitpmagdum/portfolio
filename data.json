@@ -72,10 +72,9 @@
     "about": {
         "label": "01 — About",
         "title": "THE STORY<br>SO FAR.",
-        "avatar": "AC",
+        "avatar": "RM",
         "images": [
-            "Content/images/Rohit Magdum Profile Picture.jpeg",
-            "Content/images/Rohit Coke.png"
+            "Content/images/image_73fe63c1_cleanup.png"
         ],
         "accent": {
             "num": "Photo Gallery",
