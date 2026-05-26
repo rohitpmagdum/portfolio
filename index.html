@@ -558,6 +558,110 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
+    }
+
+    /* ── Image Slider ── */
+    .about-slider {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .about-slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .about-slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(10, 10, 8, 0.6);
+      color: var(--fg);
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 5;
+      backdrop-filter: blur(6px);
+      transition: all 0.3s;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .slider-btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+
+    .slider-prev {
+      left: 0.75rem;
+    }
+
+    .slider-next {
+      right: 0.75rem;
+    }
+
+    .slider-dots {
+      position: absolute;
+      bottom: 0.75rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+      z-index: 5;
+    }
+
+    .slider-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .slider-dot.active {
+      background: var(--accent);
+      transform: scale(1.3);
+    }
+
+    /* Light mode slider btn */
+    html.light .slider-btn {
+      background: rgba(245, 244, 239, 0.75);
+      border-color: rgba(0, 0, 0, 0.15);
+      color: var(--fg);
+    }
+
+    html.light .slider-btn:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    html.light .slider-dot {
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    html.light .slider-dot.active {
+      background: var(--accent);
     }
 
     .about-avatar {
@@ -1096,8 +1200,17 @@
     <div class="about-grid">
       <div class="about-image-wrap reveal">
         <div class="about-img-frame">
-          <div class="about-img-inner">
-            <span class="about-avatar" id="about-avatar-text"></span>
+          <div class="about-img-inner about-slider" id="about-slider">
+            <!-- Images injected via JS from data.json -->
+          </div>
+          <button class="slider-btn slider-prev" id="slider-prev" aria-label="Previous image">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="slider-btn slider-next" id="slider-next" aria-label="Next image">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+          <div class="slider-dots" id="slider-dots">
+            <!-- Dots injected via JS -->
           </div>
         </div>
         <div class="about-accent-box">

@@ -73,9 +73,13 @@
         "label": "01 — About",
         "title": "THE STORY<br>SO FAR.",
         "avatar": "AC",
+        "images": [
+            "Content/images/Rohit Magdum Profile Picture.jpeg",
+            "Content/images/Rohit Coke.png"
+        ],
         "accent": {
-            "num": "2021",
-            "lbl": "Started Coding"
+            "num": "Photo Gallery",
+            "lbl": "-------------"
         },
         "bio": [
             "Hey, I'm <strong>Rohit Magdum</strong> — a web developer based in <em>India</em>.",

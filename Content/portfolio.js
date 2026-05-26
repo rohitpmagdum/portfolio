@@ -89,15 +89,92 @@ function renderMarquee(data) {
     track.innerHTML = html + html; // duplicate for seamless loop
 }
 
+function initSlider(images) {
+    const slider = document.querySelector('#about-slider');
+    const dotsContainer = document.querySelector('#slider-dots');
+    const prevBtn = document.querySelector('#slider-prev');
+    const nextBtn = document.querySelector('#slider-next');
+
+    if (!slider || !images || images.length === 0) return;
+
+    let currentIndex = 0;
+    let autoInterval;
+
+    // Inject images
+    slider.innerHTML = images.map((src, i) =>
+        `<img src="${src}" alt="Rohit Magdum Photo ${i + 1}" class="about-slide${i === 0 ? ' active' : ''}" />`
+    ).join('');
+
+    // Inject dots
+    if (dotsContainer) {
+        dotsContainer.innerHTML = images.map((_, i) =>
+            `<span class="slider-dot${i === 0 ? ' active' : ''}" data-index="${i}"></span>`
+        ).join('');
+    }
+
+    const slides = slider.querySelectorAll('.about-slide');
+    const dots = dotsContainer ? dotsContainer.querySelectorAll('.slider-dot') : [];
+
+    function goToSlide(index) {
+        if (index === currentIndex) return;
+        slides[currentIndex].classList.remove('active');
+        if (dots[currentIndex]) dots[currentIndex].classList.remove('active');
+        currentIndex = index;
+        slides[currentIndex].classList.add('active');
+        if (dots[currentIndex]) dots[currentIndex].classList.add('active');
+    }
+
+    function nextSlide() {
+        const next = (currentIndex + 1) % images.length;
+        goToSlide(next);
+    }
+
+    function prevSlide() {
+        const prev = (currentIndex - 1 + images.length) % images.length;
+        goToSlide(prev);
+    }
+
+    function startAuto() {
+        stopAuto();
+        autoInterval = setInterval(nextSlide, 4000);
+    }
+
+    function stopAuto() {
+        if (autoInterval) { clearInterval(autoInterval); autoInterval = null; }
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); startAuto(); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); startAuto(); });
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            goToSlide(parseInt(dot.getAttribute('data-index'), 10));
+            startAuto();
+        });
+    });
+
+    // Pause auto on hover
+    slider.addEventListener('mouseenter', stopAuto);
+    slider.addEventListener('mouseleave', startAuto);
+    if (prevBtn) { prevBtn.addEventListener('mouseenter', stopAuto); prevBtn.addEventListener('mouseleave', startAuto); }
+    if (nextBtn) { nextBtn.addEventListener('mouseenter', stopAuto); nextBtn.addEventListener('mouseleave', startAuto); }
+
+    startAuto();
+}
+
 function renderAbout(data) {
     const a = data.about;
     const set = (sel, val) => { const el = document.querySelector(sel); if (el) el.textContent = val; };
     const setH = (sel, val) => { const el = document.querySelector(sel); if (el) el.innerHTML = val; };
     set('#about-section-label', a.label);
     setH('#about-section-title', a.title);
-    set('#about-avatar-text', a.avatar);
     set('#about-accent-num', a.accent.num);
     set('#about-accent-lbl', a.accent.lbl);
+
+    // Init image slider from data
+    if (a.images && a.images.length > 0) {
+        initSlider(a.images);
+    }
 
     const bio = document.querySelector('#about-bio-container');
     if (bio) {
