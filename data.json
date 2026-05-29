@@ -72,13 +72,32 @@
     "about": {
         "label": "01 — About",
         "title": "THE STORY<br>SO FAR.",
-        "avatar": "RM",
-        "images": [
-            "Content/images/image_73fe63c1_cleanup.png"
+        "avatar": "",
+        "photos": [
+            {
+                "src": "Content/images/image_73fe63c1_cleanup.png",
+                "prompt": "A cinematic portrait of a developer working late at night, neon lights reflecting on the desk, cyberpunk aesthetic, 8K, photorealistic"
+            },
+            {
+                "src": "Content/images/1.png",
+                "prompt": "Transform this image into a ultra-detailed 3D cinematic animation render, 8K resolution, with illustration-influenced aesthetics and a deeply realistic atmospheric quality. The scene preserves all original visual identity, composition, and character details - only the requested action or position is modified. Apply a soft, warm key light as the dominant source, contrasted by a cooler, desaturated ambient fill light, creating natural volumetric depth and dimensional shadow play. The camera is positioned predominantly on the shadow side of the subject, evoking the raw and intimate mood of a cinematic documentary or prestige narrative film. Character textures include subtle natural skin imperfections, visible fabric weave and thread detail on clothing, realistic subsurface scattering on skin, physically accurate specular highlights and surface reflections. The overall look draws from RenderMan and MoonRay rendering pipelines, Unreal Engine 5 Lumen global illumination, Unity HDRP shading, and a Cartoonify-Sora stylization layer that bridges photorealism with expressive 3D animation aesthetics. Final image carries cinematic color grading with rich contrast, filmic warmth in the highlights, and a subtle anamorphic lens quality with shallow depth of field."
+            },
+            {
+                "src": "Content/images/2.png",
+                "prompt": "Transform this exact image into a cinematic visual inspired by Grand Theft Auto VI. Preserve the original composition, facial features, pose, and subject identity while enhancing it with a polished next-generation video Apply hyper-realistic rendering with cinematic lighting, HDR effects, detailed skin textures and natural imperfections (not cartoonish), subtle stylization inspired by GTA VI character design, vibrant but controlled color grading (Miami/Vice City-inspired tones, warm highlights, teal shadows), depth of field and environmental atmosphere for immersion , clean, sharp focus with AAA video game quality Use a grounded semi-realistic style inspired by GTA VI character design - modern, refined, and immersive, without exaggerated or comic-like features. Add balanced Miami/Vice City-inspired color grading with warm highlights, teal shadows, neon ambience, and atmospheric depth. Include realistic depth of field and sharp AAA-quality focus to create the feel of a high-budget open-world game cutscene. If applicable, enhance the background with a modern Vice City vibe, including neon lights, palm trees, luxury urban scenery, reflective streets, and cinematic sunset or night lighting. Important requirements: . Do not convert into cartoon, comic, cel-shaded, or GTA V-style art . Avoid thick outlines or unrealistic proportions . Keep the subject recognizable and authentic . Maintain realism with only subtle stylization A realistic GTA VI-inspired render that looks like a character from a modern AAA open-world game."
+            },
+            {
+                "src": "Content/images/3.png",
+                "prompt": "Ultra-realistic LEGO-style minifigure standing in a clean professional studio environment with a smooth light gray background. The character is facing directly toward the camera in a confident and friendly stance. The figure is standing upright with both feet planted on the ground, arms slightly bent in a relaxed natural position near the torso. The character has a cheerful smiling expression, conveying a friendly and approachable mood. The composition is a full-body shot centered in the frame, similar to professional toy product photography. Studio lighting is soft and diffused, creating gentle reflections on the glossy plastic surface and subtle shadows beneath the feet. The materials show realistic LEGO-style plastic texture with detailed reflections, high sharpness, and high resolution. The environment is minimalistic, clean, and modern, with a neutral background that emphasizes the figure. Minimalistic background, ultra detailed, sharp focus, realistic plastic materials, 8k, highly detailed, professional toy photography style. Based on the person in the reference image."
+            },
+            {
+                "src": "Content/images/4.png",
+                "prompt": "Create an image inspired by 1980s-1990s digital graphios, as if it were produced on early systems like MS-DOS, Windows 3.1. Break down all visual elements into simple, blocky, pixel-based shapes, using a limited palette of 4-16 vibrant colors. Replace complex gradients with flat colors or basic two-tone transitions. The image should feature visible pixel structure, including an RGB subpixel grid, horizontal scanlines, slight chromatic fringing on edges, and soft glow around brighter areas. Use a 100% black background with subtle digital noise. Colors should appear self-illuminated, with gentle light bloom and slight color bleeding into darker regions. Add light surface artifacts such as moiré patterns and floating dust. Keep the composition centered, with the main subject filling around 60-70% of the frame. Emphasize the pixel grid with sharp detail, while applying a subtle vignette that darkens the edges. The overall look should feel like authentic early computer graphics - chunky, low-resolution, and unrefined. Avoid any modern rendering or references to physical screens or devices; the image should exist as a purely digital object floating in darkness."
+            }
         ],
         "accent": {
             "num": "Photo Gallery",
-            "lbl": "-------------"
+            "lbl": "AI Generated*"
         },
         "bio": [
             "Hey, I'm <strong>Rohit Magdum</strong> — a web developer based in <em>India</em>.",
@@ -109,7 +128,7 @@
         "title": "WHAT I<br>WORK WITH.",
         "categories": [
             {
-                "icon": "⚡",
+                "icon": "fas fa-laptop-code",
                 "title": "Frontend",
                 "description": "Modern interactive UIs",
                 "tags": [
@@ -121,7 +140,7 @@
                 ]
             },
             {
-                "icon": "🔧",
+                "icon": "fas fa-server",
                 "title": "Backend",
                 "description": "Scalable server solutions",
                 "tags": [
@@ -133,7 +152,7 @@
                 ]
             },
             {
-                "icon": "💾",
+                "icon": "fas fa-database",
                 "title": "Databases",
                 "description": "Data management & optimization",
                 "tags": [
@@ -145,7 +164,7 @@
                 ]
             },
             {
-                "icon": "🛠️",
+                "icon": "fas fa-tools",
                 "title": "Tools & DevOps",
                 "description": "Developer workflow & deployment",
                 "tags": [
@@ -168,7 +187,7 @@
         {
             "id": "01",
             "featured": true,
-            "emoji": "🛒",
+            "emoji": "fas fa-shopping-cart",
             "thumbClass": "p1",
             "title": "ShopFlow",
             "description": "Full-stack e-commerce platform with payment processing",
@@ -184,7 +203,7 @@
         {
             "id": "02",
             "featured": false,
-            "emoji": "📊",
+            "emoji": "fas fa-chart-bar",
             "thumbClass": "p2",
             "title": "Analytics Dashboard",
             "description": "Real-time data visualization and reporting system",
@@ -200,7 +219,7 @@
         {
             "id": "03",
             "featured": false,
-            "emoji": "🔐",
+            "emoji": "fas fa-shield-halved",
             "thumbClass": "p3",
             "title": "User Management System",
             "description": "Enterprise authentication & authorization solution",
@@ -216,7 +235,7 @@
         {
             "id": "04",
             "featured": false,
-            "emoji": "📱",
+            "emoji": "fas fa-mobile-screen",
             "thumbClass": "p4",
             "title": "Inventory Tracker",
             "description": "Stock management application with real-time updates",

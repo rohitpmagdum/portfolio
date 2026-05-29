@@ -89,25 +89,43 @@ function renderMarquee(data) {
     track.innerHTML = html + html; // duplicate for seamless loop
 }
 
-function initSlider(images) {
+function initSlider(photos) {
     const slider = document.querySelector('#about-slider');
     const dotsContainer = document.querySelector('#slider-dots');
     const prevBtn = document.querySelector('#slider-prev');
     const nextBtn = document.querySelector('#slider-next');
 
-    if (!slider || !images || images.length === 0) return;
+    if (!slider || !photos || photos.length === 0) return;
 
     let currentIndex = 0;
     let autoInterval;
 
-    // Inject images
-    slider.innerHTML = images.map((src, i) =>
-        `<img src="${src}" alt="Rohit Magdum Photo ${i + 1}" class="about-slide${i === 0 ? ' active' : ''}" />`
-    ).join('');
+    // Inject slide wrappers with image and prompt overlay
+    slider.innerHTML = photos.map((photo, i) => {
+        const isActive = i === 0;
+        const prompt = photo.prompt || '';
+        const safePrompt = prompt.replace(/&/g, '&').replace(/"/g, '"').replace(/</g, '<').replace(/>/g, '>');
+        return `<div class="about-slide${isActive ? ' active' : ''}" data-slide-index="${i}">
+            <img src="${photo.src}" alt="Rohit Magdum Photo ${i + 1}" class="about-slide-img" width="896" height="599" loading="${isActive ? 'eager' : 'lazy'}" decoding="async" />
+            <div class="prompt-overlay">
+                <div class="prompt-overlay-bg"></div>
+                <div class="prompt-overlay-content">
+                    <p class="prompt-text">${prompt}</p>
+                    <button class="prompt-copy-btn" data-prompt="${safePrompt}" aria-label="Copy prompt" title="Copy prompt">
+                        <i class="fas fa-copy"></i>
+                        <span class="copy-feedback">Copied!</span>
+                    </button>
+                </div>
+                <div class="prompt-indicator">
+                    <i class="fas fa-info-circle"></i> Hover for prompt
+                </div>
+            </div>
+        </div>`;
+    }).join('');
 
     // Inject dots
     if (dotsContainer) {
-        dotsContainer.innerHTML = images.map((_, i) =>
+        dotsContainer.innerHTML = photos.map((_, i) =>
             `<span class="slider-dot${i === 0 ? ' active' : ''}" data-index="${i}"></span>`
         ).join('');
     }
@@ -125,12 +143,12 @@ function initSlider(images) {
     }
 
     function nextSlide() {
-        const next = (currentIndex + 1) % images.length;
+        const next = (currentIndex + 1) % photos.length;
         goToSlide(next);
     }
 
     function prevSlide() {
-        const prev = (currentIndex - 1 + images.length) % images.length;
+        const prev = (currentIndex - 1 + photos.length) % photos.length;
         goToSlide(prev);
     }
 
@@ -159,6 +177,47 @@ function initSlider(images) {
     if (prevBtn) { prevBtn.addEventListener('mouseenter', stopAuto); prevBtn.addEventListener('mouseleave', startAuto); }
     if (nextBtn) { nextBtn.addEventListener('mouseenter', stopAuto); nextBtn.addEventListener('mouseleave', startAuto); }
 
+    // ── Copy-to-clipboard for prompt buttons ──
+    slider.addEventListener('click', (e) => {
+        const btn = e.target.closest('.prompt-copy-btn');
+        if (!btn) return;
+        e.stopPropagation();
+        const promptText = btn.getAttribute('data-prompt');
+        if (!promptText) return;
+
+        navigator.clipboard.writeText(promptText).then(() => {
+            btn.classList.add('copied');
+            setTimeout(() => btn.classList.remove('copied'), 1800);
+        }).catch(() => {
+            // Fallback for older browsers / non-HTTPS
+            const ta = document.createElement('textarea');
+            ta.value = promptText;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            btn.classList.add('copied');
+            setTimeout(() => btn.classList.remove('copied'), 1800);
+        });
+    });
+
+    // ── Mobile: tap to toggle prompt overlay ──
+    slider.addEventListener('click', (e) => {
+        // Only handle taps on the slide (not on copy button which is handled above)
+        if (e.target.closest('.prompt-copy-btn')) return;
+        if (e.target.closest('.slider-btn')) return;
+        const slide = e.target.closest('.about-slide');
+        if (!slide) return;
+
+        // Toggle persistent prompt visibility on mobile
+        const activeSlide = slider.querySelector('.about-slide.active');
+        if (activeSlide && activeSlide === slide && window.matchMedia('(max-width: 768px)').matches) {
+            activeSlide.classList.toggle('prompt-visible');
+        }
+    });
+
     startAuto();
 }
 
@@ -171,9 +230,14 @@ function renderAbout(data) {
     set('#about-accent-num', a.accent.num);
     set('#about-accent-lbl', a.accent.lbl);
 
+    // Set the CSS custom property for .about-img-frame::after content
+    if (a.avatar) {
+        document.documentElement.style.setProperty('--about-avatar', `'${a.avatar}'`);
+    }
+
     // Init image slider from data
-    if (a.images && a.images.length > 0) {
-        initSlider(a.images);
+    if (a.photos && a.photos.length > 0) {
+        initSlider(a.photos);
     }
 
     const bio = document.querySelector('#about-bio-container');
@@ -210,7 +274,7 @@ function renderSkills(data) {
     if (grid) {
         grid.innerHTML = s.categories.map((cat, i) =>
             `<div class="skill-card reveal${i > 0 ? ' reveal-delay-' + i : ''}">
-                <div class="skill-icon">${cat.icon}</div>
+                <div class="skill-icon"><i class="${cat.icon}" aria-hidden="true"></i></div>
                 <h3>${cat.title}</h3>
                 <p>${cat.description}</p>
                 <div class="skill-tags">
