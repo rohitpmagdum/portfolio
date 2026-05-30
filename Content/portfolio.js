@@ -1,6 +1,8 @@
 /**
- * Portfolio — Optimized loader.
+ * Portfolio — Optimized loader with rich interactivity.
  * Fetches data.json ONCE, then populates all sections.
+ * Enables: ripple, tilt, magnetic buttons, tag flips,
+ *   timeline expand, parallax, copy-toast, easter eggs.
  */
 
 let _pdata = null;
@@ -22,6 +24,321 @@ const revealObserver = new IntersectionObserver((entries) => {
         }
     });
 }, { threshold: 0.15 });
+
+/* ═══════════════════════════════════════════
+   INTERACTIVE HELPERS
+   ═══════════════════════════════════════════ */
+
+/* ── Copy Toast ── */
+let toastTimer;
+
+function showCopyToast(message) {
+    const toast = document.getElementById('copyToast');
+    if (!toast) return;
+    toast.textContent = message || '📋 Copied!';
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+/* ── Ripple Effect ── */
+function createRipple(e, el) {
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple-effect';
+    const rect = el.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.width = ripple.style.height = size * 0.6 + 'px';
+    ripple.style.left = (e.clientX - rect.left - size * 0.3) + 'px';
+    ripple.style.top = (e.clientY - rect.top - size * 0.3) + 'px';
+    el.appendChild(ripple);
+    ripple.addEventListener('animationend', () => ripple.remove());
+}
+
+function attachRipple(selector) {
+    document.addEventListener('click', (e) => {
+        const el = e.target.closest(selector);
+        if (!el) return;
+        createRipple(e, el);
+    });
+}
+
+/* ── 3D Card Tilt ── */
+function enable3DTilt(selector, intensity = 8) {
+    const cards = document.querySelectorAll(selector);
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            card.style.transform =
+                `perspective(800px) rotateY(${x * intensity}deg) rotateX(${-y * intensity}deg) translateZ(4px)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(800px) rotateY(0deg) rotateX(0deg) translateZ(0)';
+        });
+    });
+}
+
+/* ── Stat Number Pulse on Scroll ── */
+let statPulsed = false;
+function enableStatPulse() {
+    const statsSection = document.querySelector('.hero');
+    if (!statsSection) return;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !statPulsed) {
+                statPulsed = true;
+                document.querySelectorAll('.stat-num').forEach((el, i) => {
+                    setTimeout(() => {
+                        el.classList.add('pulse');
+                        el.addEventListener('animationend', () => el.classList.remove('pulse'), { once: true });
+                    }, i * 180);
+                });
+            }
+        });
+    }, { threshold: 0.6 });
+    observer.observe(statsSection);
+}
+
+/* ── Skill Tag Flip on Click ── */
+function attachTagFlip() {
+    document.addEventListener('click', (e) => {
+        const tag = e.target.closest('.skill-tag');
+        if (!tag) return;
+        if (tag.classList.contains('flipped')) return;
+        tag.classList.add('flipped');
+        const techName = tag.textContent.trim();
+        showCopyToast('📎 ' + techName);
+        setTimeout(() => tag.classList.remove('flipped'), 500);
+    });
+}
+
+/* ── Timeline Expand/Collapse ── */
+function attachTimelineToggle() {
+    document.addEventListener('click', (e) => {
+        const item = e.target.closest('.timeline-item');
+        if (!item) return;
+        // If there's no .timeline-extra, inject one with detail
+        if (!item.querySelector('.timeline-extra')) {
+            const p = item.querySelector('.timeline-info p');
+            const fullText = p ? p.textContent : '';
+            const extra = document.createElement('div');
+            extra.className = 'timeline-extra';
+            extra.innerHTML =
+                '<p style="font-size:0.82rem;color:var(--fg);line-height:1.7;">' +
+                '📌 ' + (fullText || 'More details about this role.') +
+                ' — This position reflects hands-on experience in enterprise-grade software engineering.' +
+                '</p>';
+            item.appendChild(extra);
+        }
+        item.classList.toggle('expanded');
+    });
+}
+
+/* ── Hero Background Text Parallax ── */
+function enableParallax() {
+    const bgText = document.getElementById('hero-bg-text');
+    if (!bgText) return;
+    document.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 16;
+        const y = (e.clientY / window.innerHeight - 0.5) * 12;
+        bgText.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+    });
+}
+
+/* ── Magnetic Buttons ── */
+function enableMagneticButtons() {
+    const magneticSelectors = '.nav-cta, .btn-primary, .btn-ghost, .social-link';
+    document.addEventListener('mousemove', (e) => {
+        document.querySelectorAll(magneticSelectors).forEach(btn => {
+            const rect = btn.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
+            const radius = Math.max(rect.width, rect.height) * 1.2;
+            if (dist < radius) {
+                const strength = (1 - dist / radius) * 6;
+                const dx = (e.clientX - cx) * strength / dist * 0.25;
+                const dy = (e.clientY - cy) * strength / dist * 0.25;
+                btn.style.transform = 'translate(' + dx + 'px, ' + dy + 'px)';
+            } else {
+                btn.style.transform = 'translate(0, 0)';
+            }
+        });
+    });
+}
+
+/* ── Contact Email Copy ── */
+function attachEmailCopy() {
+    const emailEl = document.getElementById('contact-email-link');
+    if (!emailEl) return;
+    emailEl.addEventListener('click', (e) => {
+        const email = emailEl.textContent || emailEl.getAttribute('href')?.replace('mailto:', '');
+        if (!email || email.indexOf('@') === -1) return;
+        e.preventDefault();
+        navigator.clipboard.writeText(email).then(() => {
+            showCopyToast('📧 Email copied!');
+        }).catch(() => {
+            showCopyToast('📧 ' + email);
+        });
+    });
+}
+
+/* ── Glow Pulse on Contact ── */
+function enableGlowPulse() {
+    const contact = document.querySelector('#contact');
+    if (!contact) return;
+    contact.classList.add('glow-pulse');
+}
+
+/* ── Headline Glitch on Double Click ── */
+function attachHeadlineGlitch() {
+    const h1 = document.getElementById('main-headline');
+    if (!h1) return;
+    h1.addEventListener('dblclick', (e) => {
+        const lines = h1.querySelectorAll('div');
+        lines.forEach((line, i) => {
+            setTimeout(() => {
+                line.style.animation = 'headline-glitch 0.3s ease';
+                line.addEventListener('animationend', () => {
+                    line.style.animation = '';
+                }, { once: true });
+            }, i * 40);
+        });
+        showCopyToast('⚡ Glitch!');
+    });
+}
+
+/* ── Nav Logo Easter Egg ── */
+function attachEasterEgg() {
+    const logo = document.querySelector('.nav-logo');
+    if (!logo) return;
+    let clicks = 0;
+    let clickTimer;
+    logo.addEventListener('click', (e) => {
+        clicks++;
+        clearTimeout(clickTimer);
+        clickTimer = setTimeout(() => { clicks = 0; }, 800);
+        if (clicks >= 5) {
+            clicks = 0;
+            document.body.classList.add('easter-egg-active');
+            showCopyToast('🎉 You found the easter egg!');
+            setTimeout(() => document.body.classList.remove('easter-egg-active'), 600);
+        }
+    });
+}
+
+/* ── Hero Stats Click to pulse ── */
+function attachStatClickPulse() {
+    document.addEventListener('click', (e) => {
+        const statNum = e.target.closest('.stat-num');
+        if (!statNum) return;
+        statNum.classList.add('pulse');
+        statNum.addEventListener('animationend', () => statNum.classList.remove('pulse'), { once: true });
+    });
+}
+
+/* ── Marquee Drag Scroll ── */
+function enableMarqueeDrag() {
+    const marquee = document.getElementById('marquee-track-container');
+    if (!marquee) return;
+    let isDown = false, startX, scrollLeftPos;
+
+    marquee.addEventListener('mousedown', (e) => {
+        isDown = true;
+        marquee.style.animationPlayState = 'paused';
+        startX = e.pageX - marquee.getBoundingClientRect().left;
+        scrollLeftPos = marquee.scrollLeft;
+    });
+
+    marquee.addEventListener('mouseleave', () => {
+        isDown = false;
+        marquee.style.animationPlayState = 'running';
+    });
+
+    marquee.addEventListener('mouseup', () => {
+        isDown = false;
+        marquee.style.animationPlayState = 'running';
+    });
+
+    marquee.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - marquee.getBoundingClientRect().left;
+        const walk = (x - startX) * 1.5;
+        marquee.scrollLeft = scrollLeftPos - walk;
+    });
+}
+
+/* ── Footer Copy hover easter egg ── */
+function attachFooterClickCopy() {
+    const footerCopy = document.getElementById('footer-copy-text');
+    if (!footerCopy) return;
+    footerCopy.addEventListener('dblclick', () => {
+        const text = footerCopy.textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            showCopyToast('📋 Footer copied!');
+        }).catch(() => {});
+    });
+}
+
+/* ═══════════════════════════════════════════
+   INIT ALL INTERACTIONS
+   ═══════════════════════════════════════════ */
+
+function initInteractions() {
+    // Ripple on buttons
+    attachRipple('.btn-primary, .btn-ghost, .nav-cta, .social-link');
+    rippleOnExisting('.btn-primary, .btn-ghost, .nav-cta, .social-link');
+
+    // 3D Tilt on cards (deferred to let DOM render)
+    setTimeout(() => {
+        enable3DTilt('.hero-card', 6);
+        enable3DTilt('.skill-card', 4);
+    }, 500);
+
+    // Stats pulse
+    setTimeout(enableStatPulse, 800);
+
+    // Tag flip
+    attachTagFlip();
+
+    // Timeline toggle
+    setTimeout(attachTimelineToggle, 500);
+
+    // Parallax on hero bg text
+    enableParallax();
+
+    // Magnetic buttons
+    enableMagneticButtons();
+
+    // Email copy
+    setTimeout(attachEmailCopy, 500);
+
+    // Glow pulse on contact
+    setTimeout(enableGlowPulse, 1000);
+
+    // Headline glitch
+    attachHeadlineGlitch();
+
+    // Easter egg on logo
+    attachEasterEgg();
+
+    // Stat click pulse
+    attachStatClickPulse();
+
+    // Marquee drag
+    enableMarqueeDrag();
+
+    // Footer double-click copy
+    setTimeout(attachFooterClickCopy, 500);
+}
+
+function rippleOnExisting(selector) {
+    document.querySelectorAll(selector).forEach(el => {
+        el.classList.add('ripple-container');
+    });
+}
 
 /* ── Rendering helpers ── */
 
@@ -188,6 +505,7 @@ function initSlider(photos) {
         navigator.clipboard.writeText(promptText).then(() => {
             btn.classList.add('copied');
             setTimeout(() => btn.classList.remove('copied'), 1800);
+            showCopyToast('📋 Prompt copied!');
         }).catch(() => {
             // Fallback for older browsers / non-HTTPS
             const ta = document.createElement('textarea');
@@ -200,6 +518,7 @@ function initSlider(photos) {
             document.body.removeChild(ta);
             btn.classList.add('copied');
             setTimeout(() => btn.classList.remove('copied'), 1800);
+            showCopyToast('📋 Prompt copied!');
         });
     });
 
@@ -353,6 +672,9 @@ async function initPortfolio() {
         document.querySelectorAll('.reveal').forEach(el => {
             if (!el.classList.contains('visible')) revealObserver.observe(el);
         });
+
+        // Delay interactions slightly so DOM is populated
+        initInteractions();
 
     } catch (err) {
         console.error('Portfolio init failed:', err);
