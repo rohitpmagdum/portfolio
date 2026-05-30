@@ -203,18 +203,36 @@ function initSlider(photos) {
         });
     });
 
-    // ── Mobile: tap to toggle prompt overlay ──
+    // ── Tap to toggle prompt overlay / click outside to dismiss ──
     slider.addEventListener('click', (e) => {
-        // Only handle taps on the slide (not on copy button which is handled above)
+        // Ignore clicks on copy button or slider nav
         if (e.target.closest('.prompt-copy-btn')) return;
         if (e.target.closest('.slider-btn')) return;
-        const slide = e.target.closest('.about-slide');
-        if (!slide) return;
 
-        // Toggle persistent prompt visibility on mobile
         const activeSlide = slider.querySelector('.about-slide.active');
-        if (activeSlide && activeSlide === slide && window.matchMedia('(max-width: 768px)').matches) {
-            activeSlide.classList.toggle('prompt-visible');
+        if (!activeSlide) return;
+
+        const clickedInsidePrompt = e.target.closest('.prompt-overlay');
+        const clickedOnSlide = e.target.closest('.about-slide');
+
+        if (activeSlide.classList.contains('prompt-visible')) {
+            // Prompt is open — clicking outside it dismisses
+            if (!clickedInsidePrompt) {
+                activeSlide.classList.remove('prompt-visible');
+            }
+        } else if (clickedOnSlide === activeSlide) {
+            // Prompt is closed — clicking the active slide opens it
+            activeSlide.classList.add('prompt-visible');
+        }
+    });
+
+    // ── Document-level: click outside slider dismisses prompt ──
+    document.addEventListener('click', (e) => {
+        const activeSlide = slider.querySelector('.about-slide.active');
+        if (!activeSlide || !activeSlide.classList.contains('prompt-visible')) return;
+        // If click is outside the entire slider frame, dismiss
+        if (!slider.contains(e.target)) {
+            activeSlide.classList.remove('prompt-visible');
         }
     });
 
@@ -272,16 +290,17 @@ function renderSkills(data) {
 
     const grid = document.querySelector('#skills-grid-container');
     if (grid) {
-        grid.innerHTML = s.categories.map((cat, i) =>
-            `<div class="skill-card reveal${i > 0 ? ' reveal-delay-' + i : ''}">
+        grid.innerHTML = s.categories.map((cat, i) => {
+            const isAI = cat.icon && cat.icon.includes('robot');
+            return `<div class="skill-card reveal${i > 0 ? ' reveal-delay-' + i : ''}${isAI ? ' ai-glow' : ''}">
                 <div class="skill-icon"><i class="${cat.icon}" aria-hidden="true"></i></div>
                 <h3>${cat.title}</h3>
                 <p>${cat.description}</p>
                 <div class="skill-tags">
                     ${cat.tags.map(t => `<span class="skill-tag">${t}</span>`).join('')}
                 </div>
-            </div>`
-        ).join('');
+            </div>`;
+        }).join('');
         grid.querySelectorAll('.skill-card.reveal').forEach(el => revealObserver.observe(el));
     }
 }
@@ -311,7 +330,7 @@ function renderContact(data) {
 function renderFooter(data) {
     const f = data.footer;
     const copy = document.querySelector('#footer-copy-text');
-    if (copy) copy.textContent = `\u00a9 ${f.year} ${f.name}. Built with ${f.techStack}.`;
+    if (copy) copy.textContent = `\u00a9 ${f.year} ${f.name}. ${f.techStack}.`;
     const back = document.querySelector('#footer-back-link');
     if (back) back.textContent = f.backToTopLabel;
 }
