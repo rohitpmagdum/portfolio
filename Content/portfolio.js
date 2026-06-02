@@ -108,7 +108,11 @@ function attachTagFlip() {
         if (tag.classList.contains('flipped')) return;
         tag.classList.add('flipped');
         const techName = tag.textContent.trim();
-        showCopyToast('📎 ' + techName);
+        navigator.clipboard.writeText(techName).then(() => {
+            showCopyToast('📋 ' + techName + ' copied!');
+        }).catch(() => {
+            showCopyToast('📎 ' + techName);
+        });
         setTimeout(() => tag.classList.remove('flipped'), 500);
     });
 }
@@ -118,16 +122,14 @@ function attachTimelineToggle() {
     document.addEventListener('click', (e) => {
         const item = e.target.closest('.timeline-item');
         if (!item) return;
-        // If there's no .timeline-extra, inject one with detail
+        // If there's no .timeline-extra, inject one with the onclickDescription
         if (!item.querySelector('.timeline-extra')) {
-            const p = item.querySelector('.timeline-info p');
-            const fullText = p ? p.textContent : '';
+            const onclickDesc = item.getAttribute('data-onclick-desc') || '';
             const extra = document.createElement('div');
             extra.className = 'timeline-extra';
             extra.innerHTML =
                 '<p style="font-size:0.82rem;color:var(--fg);line-height:1.7;">' +
-                '📌 ' + (fullText || 'More details about this role.') +
-                ' — This position reflects hands-on experience in enterprise-grade software engineering.' +
+                '📌 ' + (onclickDesc || 'More details about this role.') +
                 '</p>';
             item.appendChild(extra);
         }
@@ -191,11 +193,11 @@ function enableGlowPulse() {
     contact.classList.add('glow-pulse');
 }
 
-/* ── Headline Glitch on Double Click ── */
+/* ── Headline Glitch on Click ── */
 function attachHeadlineGlitch() {
     const h1 = document.getElementById('main-headline');
     if (!h1) return;
-    h1.addEventListener('dblclick', (e) => {
+    h1.addEventListener('click', (e) => {
         const lines = h1.querySelectorAll('div');
         lines.forEach((line, i) => {
             setTimeout(() => {
@@ -270,11 +272,11 @@ function enableMarqueeDrag() {
     });
 }
 
-/* ── Footer Copy hover easter egg ── */
+/* ── Footer Copy on Click ── */
 function attachFooterClickCopy() {
     const footerCopy = document.getElementById('footer-copy-text');
     if (!footerCopy) return;
-    footerCopy.addEventListener('dblclick', () => {
+    footerCopy.addEventListener('click', () => {
         const text = footerCopy.textContent;
         navigator.clipboard.writeText(text).then(() => {
             showCopyToast('📋 Footer copied!');
@@ -294,7 +296,6 @@ function initInteractions() {
     // 3D Tilt on cards (deferred to let DOM render)
     setTimeout(() => {
         enable3DTilt('.hero-card', 6);
-        enable3DTilt('.skill-card', 4);
     }, 500);
 
     // Stats pulse
@@ -588,7 +589,7 @@ function renderAbout(data) {
     const timeline = document.querySelector('#about-timeline-container');
     if (timeline) {
         timeline.innerHTML = a.timeline.map((item, i) =>
-            `<div class="timeline-item reveal${i > 0 ? ' reveal-delay-' + i : ''}">
+            `<div class="timeline-item reveal${i > 0 ? ' reveal-delay-' + i : ''}" data-onclick-desc="${(item.onclickDescription || '').replace(/&/g, '&').replace(/"/g, '"').replace(/</g, '<').replace(/>/g, '>')}">
                 <div class="timeline-year">${item.year}</div>
                 <div class="timeline-info">
                     <h3>${item.title}</h3>

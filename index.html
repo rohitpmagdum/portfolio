@@ -1005,7 +1005,7 @@
     .skill-card {
       background: var(--bg);
       padding: 2.5rem 2rem;
-      transition: background 0.3s;
+      transition: background 0.3s, box-shadow 0.3s;
       position: relative;
       overflow: hidden;
     }
@@ -1018,17 +1018,17 @@
       right: 0;
       height: 2px;
       background: var(--accent);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s;
+      opacity: 0;
+      transition: opacity 0.3s;
     }
 
     .skill-card:hover {
       background: var(--bg2);
+      box-shadow: 0 0 0 1px rgba(212, 255, 78, 0.25), 0 0 20px rgba(212, 255, 78, 0.08);
     }
 
     .skill-card:hover::before {
-      transform: scaleX(1);
+      opacity: 1;
     }
 
     .skill-icon {
@@ -1453,8 +1453,7 @@
 }
 
 /* ── 3D Tilt for Cards ── */
-.hero-card,
-.skill-card {
+.hero-card {
   transition: transform 0.15s ease-out;
   transform-style: preserve-3d;
   will-change: transform;
@@ -1511,6 +1510,7 @@
   cursor: pointer;
   transition: background 0.35s, padding-left 0.35s;
   position: relative;
+  flex-wrap: wrap;
 }
 
 .timeline-item::after {
@@ -1546,15 +1546,18 @@
 }
 
 .timeline-item .timeline-extra {
+  flex-basis: 100%;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.45s ease, opacity 0.35s, margin 0.35s;
   opacity: 0;
   margin-top: 0;
+  max-width: 36rem;
 }
 
 .timeline-item.expanded .timeline-extra {
-  max-height: 250px;
+  max-height: 800px;
+  overflow-y: auto;
   opacity: 1;
   margin-top: 0.75rem;
 }
@@ -1740,15 +1743,6 @@ body.easter-egg-active {
   90%  { transform: translateX(2px); }
 }
 
-/* ── Skill Card Icon Hover ── */
-.skill-card:hover .skill-icon {
-  transform: scale(1.12);
-  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
-}
-
-.skill-icon {
-  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
-}
 
 /* ── Key hint ── */
 .nav-logo {

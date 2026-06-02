@@ -93,6 +93,14 @@
             {
                 "src": "Content/images/4.png",
                 "prompt": "Create an image inspired by 1980s-1990s digital graphios, as if it were produced on early systems like MS-DOS, Windows 3.1. Break down all visual elements into simple, blocky, pixel-based shapes, using a limited palette of 4-16 vibrant colors. Replace complex gradients with flat colors or basic two-tone transitions. The image should feature visible pixel structure, including an RGB subpixel grid, horizontal scanlines, slight chromatic fringing on edges, and soft glow around brighter areas. Use a 100% black background with subtle digital noise. Colors should appear self-illuminated, with gentle light bloom and slight color bleeding into darker regions. Add light surface artifacts such as moiré patterns and floating dust. Keep the composition centered, with the main subject filling around 60-70% of the frame. Emphasize the pixel grid with sharp detail, while applying a subtle vignette that darkens the edges. The overall look should feel like authentic early computer graphics - chunky, low-resolution, and unrefined. Avoid any modern rendering or references to physical screens or devices; the image should exist as a purely digital object floating in darkness."
+            },
+            {
+                "src": "Content/images/5.png",
+                "prompt": "Create a 3D cartoon man with a rap style (face inspired by the uploaded image). He should have a big head and large sneakers, an oversized hoodie with a rap-style pattern, black baggy pants, big sunglasses, and a thick chain necklace. Put him in a playful pose, with a white background, cinematic lighting, and highly detailed Pixar-style rendering."
+            },
+            {
+                "src": "Content/images/6.png",
+                "prompt": "A highly detailed portrait of a man with curly dark hair and a well-groomed beard, wearing a textured black sweater. His facial structure, body proportions, and distinctive features closely match the uploaded reference photo, preserving accurate likeness and natural anatomy. He has a serious, focused expression with deep-set eyes, subtle facial tension, and a confident presence.The portrait is set against a smooth gradient background transitioning from light gray to dark gray, creating a clean studio aesthetic that enhances the subject’s facial definition. Soft, directional lighting casts gentle shadows across his face, emphasizing the jawline, cheekbones, and skin texture while maintaining a realistic, natural look. The black sweater texture is clearly visible, adding depth and visual richness.Style: high-end studio portrait photography, photorealistic, ultra-detailed skin texture, natural color grading, shallow depth of field, sharp focus on the face, cinematic lighting, professional editorial quality.Reference guidance: use the uploaded photo to accurately replicate facial features, hair pattern, beard shape, body build, proportions, and subtle identifying details while maintaining realism and consistency."
             }
         ],
         "accent": {
@@ -107,18 +115,20 @@
             {
                 "year": "May 2025 - Present",
                 "title": "Software Developer @ Larsen & Toubro (via TeamLease Services)",
-                "description": "Design, develop, and enhance internal enterprise applications."
+                "description": "Design, develop, and enhance internal enterprise applications.",
+                "onclickDescription": "Currently working on full-stack development of internal enterprise applications at Larsen & Toubro. Tech stack includes ASP.NET Core, C#, SQL Server, and Dapper ORM. Responsible for both frontend UI enhancements and backend API development, ensuring scalable and maintainable code."
             },
             {
                 "year": "Jan 2025 - Apr 2025",
                 "title": "Software Developer Intern @ Larsen & Toubro",
-                "description": "Developed internal web applications"
+                "description": "Developed internal web applications",
+                "onclickDescription": "During this internship, built internal web applications from the ground up using ASP.NET and SQL Server. Gained hands-on experience with the full software development lifecycle — from requirements gathering and database design to deployment and user training. Collaborated with senior developers on code reviews and best practices."
             },
             {
                 "year": "2021 - 2025",
                 "title": "Bachelor of Engineering",
-                "description": "Electronics & Computer Engineering <br/> • CGPA: 8.17 / 10.0 <br/> • Percentage: 69.19% <br/> • GATE (CSE): 15.37 <br/> • GATE (DA): 14"
-
+                "description": "Electronics & Computer Engineering <br/> • CGPA: 8.17 / 10.0 <br/> • Percentage: 69.19% <br/> • GATE (CSE): 15.37 <br/> • GATE (DA): 14",
+                "onclickDescription": "Pursued a Bachelor of Engineering in Electronics & Computer Engineering. Strong academic performance with a CGPA of 8.17/10.0. Successfully qualified GATE in both Computer Science (score: 15.37) and Data Analytics (score: 14), demonstrating strong fundamentals across multiple engineering disciplines."
             }
             
         ]
