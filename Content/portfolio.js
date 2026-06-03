@@ -284,11 +284,24 @@ function attachFooterClickCopy() {
     });
 }
 
+/* ── Photo Gallery Toggle (Click accent box) ── */
+function attachGalleryToggle() {
+    const accentBox = document.querySelector('.about-accent-box');
+    const imageWrap = document.querySelector('.about-image-wrap');
+    if (!accentBox || !imageWrap) return;
+    accentBox.addEventListener('click', () => {
+        imageWrap.classList.toggle('gallery-visible');
+    });
+}
+
 /* ═══════════════════════════════════════════
    INIT ALL INTERACTIONS
    ═══════════════════════════════════════════ */
 
 function initInteractions() {
+    // Gallery toggle
+    attachGalleryToggle();
+
     // Ripple on buttons
     attachRipple('.btn-primary, .btn-ghost, .nav-cta, .social-link');
     rippleOnExisting('.btn-primary, .btn-ghost, .nav-cta, .social-link');

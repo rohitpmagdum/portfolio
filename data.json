@@ -104,8 +104,8 @@
             }
         ],
         "accent": {
-            "num": "Photo Gallery",
-            "lbl": "AI Generated*"
+            "num": "AI Photo Gallery",
+            "lbl": "Click to Explore*"
         },
         "bio": [
             "Hey, I'm <strong>Rohit Magdum</strong> — a web developer based in <em>India</em>.",

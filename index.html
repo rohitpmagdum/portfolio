@@ -597,14 +597,23 @@
 
     .about-grid {
       display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 5rem;
+      grid-template-columns: auto 1fr;
+      gap: 2rem;
       align-items: start;
       margin-top: 4rem;
+      transition: grid-template-columns 0.45s ease, gap 0.45s ease;
+    }
+
+    .about-grid:has(.about-image-wrap.gallery-visible) {
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
     }
 
     .about-image-wrap {
       position: relative;
+      overflow: visible;
+      min-width: 0;
+      transition: width 0.45s ease;
     }
 
     .about-img-frame {
@@ -923,13 +932,70 @@
     }
 
     .about-accent-box {
-      position: absolute;
-      top: -1.5rem;
-      left: -1.5rem;
+      position: relative;
       padding: 1rem 1.5rem;
       background: var(--accent);
       color: var(--bg);
       z-index: 7;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+      transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s, top 0.45s ease, left 0.45s ease;
+    }
+
+    /* When gallery is visible, accent box overlaps top-left of the image */
+    .about-image-wrap.gallery-visible .about-accent-box {
+      position: absolute;
+      top: -1.5rem;
+      left: -1.5rem;
+    }
+
+    .about-accent-box:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(212, 255, 78, 0.35);
+    }
+
+    .about-accent-box:active {
+      transform: scale(0.95);
+      transition: transform 0.1s;
+    }
+
+    /* ── Photo Gallery Toggle ── */
+    .about-img-frame,
+    .about-image-wrap .slider-btn,
+    .about-image-wrap .slider-dots {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s ease, position 0s 0.45s;
+    }
+
+    /* When hidden: collapse gallery elements out of flow so accent box
+       is the only thing sizing the auto grid column */
+    .about-image-wrap:not(.gallery-visible) .about-img-frame,
+    .about-image-wrap:not(.gallery-visible) .slider-btn,
+    .about-image-wrap:not(.gallery-visible) .slider-dots {
+      position: absolute;
+      width: 100%;
+    }
+
+    .about-image-wrap:not(.gallery-visible) .about-img-frame {
+      height: 100%;
+      background: var(--bg3);
+    }
+
+    .about-image-wrap:not(.gallery-visible) .about-img-inner {
+      background: var(--bg3);
+    }
+
+    .about-image-wrap.gallery-visible .about-img-frame,
+    .about-image-wrap.gallery-visible .slider-btn,
+    .about-image-wrap.gallery-visible .slider-dots {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .about-text {
+      transition: max-width 0.45s ease;
     }
 
     .about-accent-box .num {
@@ -1377,7 +1443,7 @@
         max-width: 360px;
       }
 
-      .about-grid {
+      .about-grid:has(.about-image-wrap.gallery-visible) {
         grid-template-columns: 1fr;
         gap: 2.5rem;
       }
