@@ -1443,9 +1443,13 @@
         max-width: 360px;
       }
 
-      .about-grid:has(.about-image-wrap.gallery-visible) {
+      .about-grid {
         grid-template-columns: 1fr;
-        gap: 2.5rem;
+      }
+
+      /* Mobile: hide the photo gallery entirely */
+      .about-image-wrap {
+        display: none;
       }
 
       /* Mobile: show prompt hint indicator */
